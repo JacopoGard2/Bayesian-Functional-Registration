@@ -211,4 +211,79 @@ lines(time_grid, lower_bound[[3]], col = color_bands[3], lty = 2)
 lines(time_grid, upper_bound[[3]], col = color_bands[3], lty = 2)
 
 
+x11()
+plot(seq(0, 1, len = n_obs[[1]][5]),
+     result$y_star[[1]][[5]],
+     col = colors[[1]][5],
+     main = '',
+     ylim = ylim_plot,
+     type = 'l',
+     xlab = '',
+     ylab = '',
+     lwd = 3)
+
+points(seq(0, 1, len = 100),
+       BM %*% result$post$beta_group[[1]] + BM_gamma %*% result$post$gamma_group[[1]][[5]],
+       col = colors2[1],
+       lwd = 5,
+       type = 'l')
+
+
+                       
+x11()
+plot(seq(0, 1, len = n_obs[[2]][30]),
+     result$y_star[[2]][[30]],
+     col = colors[[2]][30],
+     main = '',
+     ylim = ylim_plot,
+     type = 'l',
+     xlab = '',
+     ylab = '',
+     lwd = 3)
+
+points(seq(0, 1, len = 100),
+       BM %*% result$post$beta_group[[2]] + BM_gamma %*% result$post$gamma_group[[2]][[30]],
+       col = colors2[2],
+       lwd = 5,
+       type = 'l')
+
+x11()
+plot(seq(0, 1, len = n_obs[[3]][3]),
+     result$y_star[[3]][[3]],
+     col = colors[[3]][3],
+     main = '',
+     ylim = ylim_plot,
+     type = 'l',
+     xlab = '',
+     ylab = '',
+     lwd = 3)
+
+points(seq(0, 1, len = 100),
+       BM %*% result$post$beta_group[[3]] + BM_gamma %*% result$post$gamma_group[[3]][[3]],
+       col = colors2[3],
+       lwd = 5,
+       type = 'l')
+
+accepts = c()
+for(g in 1:n_groups){
+  for(i in 1:n_per_group[g])
+accepts = c(accepts,result$post$accepts[[g]][i])
+}
+x11()
+hist(accepts,main='',ylab='',xlab='')
+
+x11()
+matplot(result$full$lambda_s[(nburn+1):(niter+nburn)],type='l', xlab = '', main='',ylab='')
+
+x11()
+matplot(result$full$sigma_gamma_s[(nburn+1):(niter+nburn)],type='l', xlab = '', main='')
+
+x11()
+matplot(result$full$beta_group_s[[2]][(nburn+1):(niter+nburn),],type='l', xlab = '', main='')
+
+x11()
+matplot(result$full$gamma_group_s[[1]][[7]][(nburn+1):(niter+nburn),],type='l', xlab = '', main='')
+
+x11()
+matplot(result$full$phi_group_s[[1]][[30]][(nburn+1):(niter+nburn),2:(q-1)],type='l', xlab = '', main='')
 
